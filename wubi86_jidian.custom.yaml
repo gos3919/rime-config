@@ -1,0 +1,13 @@
+patch:
+  # 在翻译器中添加自定义短语翻译器
+  "engine/translators/+":
+    - table_translator@custom_phrase
+
+  # 定义自定义短语的配置
+  custom_phrase:
+    dictionary: ""
+    user_dict: custom_phrase      # 指向你的 custom_phrase.txt
+    db_class: stabledb
+    enable_completion: false
+    enable_sentence: false
+    initial_quality: 1
