@@ -1,7 +1,51 @@
 ![rime_all](https://github.com/KyleBing/rime-wubi86-jidian/assets/12215982/710c7e80-1660-48f1-bcc5-157c6bd3f662)
 
 该库是 [Rime](https://rime.im/) 输入法一个 86 版极点五笔的输入配置方案，支持多平台（Windows、macOS、Linux、iOS、Android）
+# 使用
+你的情况是已经有了一个配置仓库，不需要再手动写补丁文件，**直接把仓库里的文件覆盖到 Rime 配置目录**就行。
 
+---
+
+## 操作步骤
+
+### 1. 找到仓库本地路径
+你截图里的仓库是 GitHub 上的，需要先确认它在你电脑上的本地路径。如果你还没有克隆下来：
+
+```bash
+cd ~/Downloads
+git clone https://github.com/gos3919/rime-config.git
+```
+
+假设你的仓库本地路径是 `~/Downloads/rime-config`（根据实际情况调整）。
+
+### 2. 备份原有配置（以防万一）
+```bash
+cp -r ~/Library/Rime ~/Library/Rime.backup.$(date +%Y%m%d)
+```
+
+### 3. 复制仓库文件到 Rime 目录
+```bash
+# 先清空原有配置（可选，如果仓库是完整配置就清空）
+rm -rf ~/Library/Rime/*
+
+# 把仓库里除了 .git 之外的都复制过去
+cp -r ~/Downloads/rime-config/* ~/Library/Rime/
+cp -r ~/Downloads/rime-config/.[!.]* ~/Library/Rime/ 2>/dev/null
+```
+
+**注意**：如果你的仓库根目录下直接就是 `default.custom.yaml`、`squirrel.custom.yaml` 等文件，上面的命令就行。如果配置文件在仓库的子目录里（比如 `src/` 或 `config/`），需要把路径改成对应子目录。
+
+### 4. 重新部署
+复制完后，点屏幕右上角鼠须管图标 → **重新部署**（或者终端执行）：
+```bash
+/Library/Input\ Methods/Squirrel.app/Contents/MacOS/Squirrel --reload
+```
+
+---
+
+## 如果仓库文件不在根目录
+
+截图显示你的仓库文件树里直接就有 `default.custom.yaml`、`squirrel.custom.yaml` 等，说明根目录就是配置目录，第一套命令应该就能直接用。如果复制后部署报错，再告诉我具体报错信息。
 ## 一、概述
 
 这里是一个输入法配置方案，不是输入法本身。
